@@ -2,7 +2,7 @@ library(tidyverse)
 library(stringr)
 library(stringi)
 library(pdftools)
-setwd("~/GitHub/2019-illinois-capital-bill")
+setwd("~/GitHub/Illinois-Capital-Bill-2019")
 
 
 # Read PDF ----------------------------------------------------------------
