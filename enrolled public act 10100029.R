@@ -4,7 +4,6 @@ library(stringi)
 library(pdftools)
 setwd("~/GitHub/Illinois-Capital-Bill-2019")
 
-
 # Read PDF ----------------------------------------------------------------
 file<-list.files(pattern = "pdf$")
 bill<-lapply(file, pdf_text)
@@ -34,45 +33,49 @@ index2<-paste(articles, collapse = "|")#collapses into list
 index3<-paste(article_full_name,collapse = "|")#collapses into list
 
 #Split by section and extract section numbers
-hb62<-as.data.frame(bill) %>% 
+bill_text<-as.data.frame(bill) %>% 
   mutate(text= str_split(bill,"    Section| ARTICLE ")) %>% 
   rowwise() %>%
   unnest(text) %>% 
   rowwise %>%
   mutate(section_num = str_extract(text,"[^.]+"))
 
-hb62$bill<-NULL
+##trail for purpose column
+bill_text <- bill_text %>% 
+  mutate(purpose = substring(text, regexpr("for", text) +1))
+
+bill_text$bill<-NULL
 
 
 #Removing text junk
-hb62$text<-str_remove_all(hb62$text, "[\r\n]") #removes row splits
-hb62$section_num<-str_remove_all(hb62$section_num, "[\r\n]") #removes row splits
-hb62$text<-str_remove_all(hb62$text, "Public Act 101-0029HB0062 Enrolled") #removes header
-hb62$text<-str_remove_all(hb62$text,"LRB101 02974 WGH 47982 b") #removes header
-hb62$section_num<-str_remove_all(hb62$section_num, "Public Act 101-0029HB0062 Enrolled") #removes header
-hb62$section_num<-str_remove_all(hb62$section_num,"LRB101 02974 WGH 47982 b") #removes header
-hb62$text<-str_replace_all(hb62$text, ' +', " ") #replaces two or more spaces with one space
-hb62$text<- str_replace_all(hb62$text, "000 ", "000, ") #manual fix for amounts that are missing commas for extraction later
-hb62$text<- str_replace_all(hb62$text, "300 ", "300, ")
-hb62$text<- str_replace_all(hb62$text, "200 ", "200, ")
-hb62$text<- str_replace_all(hb62$text, "500 ", "500, ")
-hb62$text<- str_replace_all(hb62$text, "600 ", "600, ")
-hb62$text<- str_replace_all(hb62$text, "450 ", "450, ")
+bill_text$text<-str_remove_all(bill_text$text, "[\r\n]") #removes row splits
+bill_text$section_num<-str_remove_all(bill_text$section_num, "[\r\n]") #removes row splits
+bill_text$text<-str_remove_all(bill_text$text, "Public Act 101-0029HB0062 Enrolled") #removes header
+bill_text$text<-str_remove_all(bill_text$text,"LRB101 02974 WGH 47982 b") #removes header
+bill_text$section_num<-str_remove_all(bill_text$section_num, "Public Act 101-0029HB0062 Enrolled") #removes header
+bill_text$section_num<-str_remove_all(bill_text$section_num,"LRB101 02974 WGH 47982 b") #removes header
+bill_text$text<-str_replace_all(bill_text$text, ' +', " ") #replaces two or more spaces with one space
+bill_text$text<- str_replace_all(bill_text$text, "000 ", "000, ") #manual fix for amounts that are missing commas for extraction later
+bill_text$text<- str_replace_all(bill_text$text, "300 ", "300, ")
+bill_text$text<- str_replace_all(bill_text$text, "200 ", "200, ")
+bill_text$text<- str_replace_all(bill_text$text, "500 ", "500, ")
+bill_text$text<- str_replace_all(bill_text$text, "600 ", "600, ")
+bill_text$text<- str_replace_all(bill_text$text, "450 ", "450, ")
 
 #add fund names
-hb62$fund<-str_extract(hb62$text,index1)
-hb62$fund<-str_replace_all(hb62$fund, "Anti-Pollution Fund", "Anti-Pollution Bond Fund") #fixes typo that had wrong fund name
+bill_text$fund<-str_extract(bill_text$text,index1)
+bill_text$fund<-str_replace_all(bill_text$fund, "Anti-Pollution Fund", "Anti-Pollution Bond Fund") #fixes typo that had wrong fund name
 
 #Extracting dollar values and remove comma
-hb62$appropriation <- str_extract_all(hb62$text, "[$][0-9,]+") #pulls out dollar amounts
-hb62$appropriation <- substr(hb62$appropriation, 1, nchar(hb62$appropriation)-1) #removes extra commas and dollar signs
+bill_text$appropriation <- str_extract_all(bill_text$text, "[$][0-9,]+") #pulls out dollar amounts
+bill_text$appropriation <- substr(bill_text$appropriation, 1, nchar(bill_text$appropriation)-1) #removes extra commas and dollar signs
 
 #add articles
-hb62$section_num<- str_replace_all(hb62$section_num, "  +", " ") #move this after dept names are pulled
-hb62$article<-str_extract(hb62$section_num,index3) #pulls article from text column
-hb62<-separate(hb62,article, c("article","dept"), sep = " ") %>%  #pulls out article number
+bill_text$section_num<- str_replace_all(bill_text$section_num, "  +", " ") #move this after dept names are pulled
+bill_text$article<-str_extract(bill_text$section_num,index3) #pulls article from text column
+bill_text<-separate(bill_text,article, c("article","managing_agency"), sep = " ") %>%  #pulls out article number
   fill(article) %>% 
-  mutate(dept = case_when(article == 2 ~ "Department of Commerce and Economic Opportunity", #fills in dept name
+  mutate(managing_agency = case_when(article == 2 ~ "Department of Commerce and Economic Opportunity", #fills in dept name
                           article == 3 ~ "Department of Natural Resources",
                           article == 4 ~ "Department of Natural Resources",
                           article == 5 ~ "Department of Transportation",
@@ -89,10 +92,11 @@ hb62<-separate(hb62,article, c("article","dept"), sep = " ") %>%  #pulls out art
                           article == 16 ~ "Department of Commerce and Economic Opportunity",
                           article == 17 ~ "Department of Commerce and Economic Opportunity")) %>%
            filter(!is.na(fund), !is.na(article)) %>% #gets rid of sections without appropriations
-           select(article, section_num,fund,dept,appropriation,text)
+           select(article, section_num,fund,managing_agency,appropriation,text)
 
 #write csv
-write.csv(hb62, "trial.csv")
+write.csv(bill_text, "Public Act 101-0029.csv")
+
 
 #OPTIONAL: CREATE "GRANTEE" AND "PURPOSE" COLUMNS
 #the code below creates the grantee and purpose columns available in the downloadable CSV file available on the policy
@@ -109,6 +113,4 @@ bill_text$grantee<-str_remove_all(bill_text$grantee, "City of ")
 bill_text$grantee<-str_remove_all(bill_text$grantee, "a grant to ")
 bill_text$grantee<-str_remove_all(bill_text$grantee, "grants to ")
 bill_text$grantee<-str_remove_all(bill_text$grantee, "costs associated with ")
-bill_text$purpose<-str_remove_all(bill_text$purpose, "costs associated with "
-
-
+bill_text$purpose<-str_remove_all(bill_text$purpose, "costs associated with ")
