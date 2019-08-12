@@ -2,6 +2,8 @@ In June 2019, the State of Illinois enacted a package of legislation to fund tra
 session. The majority of the funded projects and programs are located within one piece of legislation, Public Act 101-0029, which is
 publicly available as a PDF. Within the document there are more than 1,400 line-item appropriations written in paragraph. Though the document is searchable, the text format makes viewing more than one appropriation at a time difficult.  
 
+Download the .xlsx file above it you'd like the final, clean product.
+
 This R script takes the PDF of the enrolled public act and converts it into a data table that can be explored, grouped, and summarized. 
 
 After running the code, for the purposes of data scrubbing please note the following errors and anomalies that need to be fixed (either
@@ -24,7 +26,7 @@ code combine two appropriations. Break these out.
 3.	Notice the last outstanding error at the bottom of the appropriation filter is a typo on article 16, section 5250: is this $100,000
 or $1,000,000? Here, we assume it is the larger to be on the conservative side. 
 
-The OPTIONAL code at the bottom creates the "grantee" and "purpose" columns that are available in the downloadable Excel document. The resulting columns are very messy and time intensive to scrub. If these columns are of use to you, I recomend just using the article and section number from the downloadable Excel doc and using a lookup to pull in the ones CMAP has scrubbed. 
+The OPTIONAL code at the bottom creates the "grantee" and "purpose" columns that are available in the downloadable Excel document. The resulting columns are very messy and time intensive to scrub. If these columns are of use to you, I recommend just using the article and section number from the downloadable Excel doc and using a lookup to pull in the ones CMAP has scrubbed. 
 
 IMPORTANT TO REMEMBER: The projects and programs funded in Public Act 101-0029 do not represent all capital projects funded in the 
 package passed by the General Assembly, nor are they guaranteed to move forward. Appropriations, particularly for bond-funded projects
