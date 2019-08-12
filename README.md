@@ -2,7 +2,7 @@ In June 2019, the State of Illinois enacted a package of legislation to fund tra
 session. The majority of the funded projects and programs are located within one piece of legislation, Public Act 101-0029, which is
 publicly available as a PDF. Within the document there are more than 1,400 line-item appropriations written in paragraph. Though the document is searchable, the text format makes viewing more than one appropriation at a time difficult.  
 
-Download the .xlsx file above it you'd like the final, clean product.
+Download the .xlsx file above if you'd like to view the final, clean product.
 
 This R script takes the PDF of the enrolled public act and converts it into a data table that can be explored, grouped, and summarized. 
 
@@ -12,7 +12,7 @@ in R or export as a CSV and do the following in Excel):
 1.	Filter  the appropriation column to find errors and multiple appropriations that need to be broken out. 
   
   - Filter by "character(0" . The appropriations in Article 6 are written differently and have more than one appropriation per section
-  which don't get caught  by the script. Manually split and enter the appropriations for this article. For some of them, like sections   
+  which don't get caught  by the script. Manually split and enter the appropriations for this article. For some of them, like sections  
   75, 80 and 85 you’ll need to add them up, or break out into multiple rows. After taking care of the line items in Article 6, note the
   remaining rows either have missing dollar signs, or a typo in them, such as article 16, section 2030, where there is a space between
   the dollar sign and the amount so the code didn’t pick it up. Manually copy the appropriation amount into the appropriation column. 
@@ -26,7 +26,7 @@ code combine two appropriations. Break these out.
 3.	Notice the last outstanding error at the bottom of the appropriation filter is a typo on article 16, section 5250: is this $100,000
 or $1,000,000? Here, we assume it is the larger to be on the conservative side. 
 
-The OPTIONAL code at the bottom creates the "grantee" and "purpose" columns that are available in the downloadable Excel document. The resulting columns are very messy and time intensive to scrub. If these columns are of use to you, I recommend just using the article and section number from the downloadable Excel doc and using a lookup to pull in the ones CMAP has scrubbed. 
+The OPTIONAL code at the bottom creates the "grantee" and "purpose" columns that are available in the downloadable Excel document. The resulting columns are very messy and need significant cleaning. If these columns are of use to you, I recommend just using the article and section number from the downloadable Excel doc and using a lookup to pull in the columns from the .xlsx version already scrubbed by CMAP. 
 
 IMPORTANT TO REMEMBER: The projects and programs funded in Public Act 101-0029 do not represent all capital projects funded in the 
 package passed by the General Assembly, nor are they guaranteed to move forward. Appropriations, particularly for bond-funded projects
