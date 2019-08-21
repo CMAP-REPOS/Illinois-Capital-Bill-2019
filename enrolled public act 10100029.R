@@ -96,8 +96,8 @@ write.csv(hb62, "trial.csv")
 
 
 #OPTIONAL: CREATE "GRANTEE" AND "PURPOSE" COLUMNS
-#the code below creates the grantee and purpose columns available in the downloadable CSV file available on the policy
-#update at XXXXXXXX. These columns use the formulaic style of the bill, but are admittedly quite messy and require a fair
+#the code below creates the grantee and purpose columns available in the downloadable CSV file available on the policy update at
+#https://bit.ly/30lBJIR . These columns use the formulaic style of the bill, but are admittedly quite messy and require a fair
 #amount of clean up. Or more code, that you should write and share with us! The downloadable version has been scrubbed. 
 
 bill_text<-bill_text %>% 
