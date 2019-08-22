@@ -2,9 +2,8 @@ library(tidyverse)
 library(stringr)
 library(stringi)
 library(pdftools)
-setwd("~/GitHub/Illinois-Capital-Bill-2019") #Update to location you have saved your repository
-
-
+setwd("~/GitHub/Illinois-Capital-Bill-2019") #MAKE SURE TO CHANGE WORKING DIRECTORY TO YOUR LOCAL FOLDER THAT CONTAINS THE PDF
+                                             #"Public Act 101-0029" FROM THE CMAP REPO
 # Read PDF ----------------------------------------------------------------
 file<-list.files(pattern = "pdf$")
 bill<-lapply(file, pdf_text)
