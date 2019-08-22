@@ -1,4 +1,4 @@
-In June 2019, the State of Illinois enacted a package of legislation to fund transportation capital projects, water infrastructure, natural resources and open space projects, and the construction of schools, affordable housing, and other facilities. Appropriations for the capital package are found in multiple pieces of legislation that were approved together during the General Assembly’s spring
+In June and July 2019, the State of Illinois enacted a package of legislation to fund transportation capital projects, water infrastructure, natural resources and open space projects, and the construction of schools, affordable housing, and other facilities. Appropriations for the capital package are found in multiple pieces of legislation that were approved together during the General Assembly’s spring
 session. The majority of the funded projects and programs are located within one piece of legislation, Public Act 101-0029, which is
 publicly available as a PDF. Within the document there are more than 1,400 line-item appropriations written in paragraph. Though the document is searchable, the text format makes viewing more than one appropriation at a time difficult.  
 
