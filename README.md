@@ -26,7 +26,7 @@ code combine two appropriations. Break these out.
 3.	Notice the last outstanding error at the bottom of the appropriation filter is a typo on article 16, section 5250: is this $100,000
 or $1,000,000? Here, we assume it is the larger to be on the conservative side. 
 
-The OPTIONAL code at the bottom creates the "grantee" and "purpose" columns that are available in the downloadable Excel document. The resulting columns are very messy and need significant cleaning. If these columns are of use to you, I recommend just using the article and section number from the downloadable Excel doc and using a lookup to pull in the columns from the .xlsx version already scrubbed by CMAP. 
+The grantee_purpose_cols script creates the "grantee" and "purpose" columns that are available in the downloadable Excel document. The resulting columns are very messy and need significant cleaning. If these columns are of use to you, I recommend just using the article and section number from the downloadable Excel doc and using a lookup to pull in the columns from the .xlsx version already scrubbed by CMAP. 
 
 IMPORTANT TO REMEMBER: The projects and programs funded in Public Act 101-0029 do not represent all capital projects funded in the 
 package passed by the General Assembly, nor are they guaranteed to move forward. Appropriations, particularly for bond-funded projects
