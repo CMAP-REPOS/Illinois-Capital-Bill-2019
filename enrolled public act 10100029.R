@@ -2,7 +2,7 @@ library(tidyverse)
 library(stringr)
 library(stringi)
 library(pdftools)
-setwd("~/GitHub/Illinois-Capital-Bill-2019")
+setwd("~/GitHub/Illinois-Capital-Bill-2019") #Update to location you have saved your repository
 
 
 # Read PDF ----------------------------------------------------------------
