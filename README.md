@@ -4,7 +4,7 @@ publicly available as a PDF. Within the document there are more than 1,400 line-
 
 Download the .xlsx file above if you'd like to view the final, clean product.
 
-This R script takes the PDF of the enrolled public act and converts it into a data table that can be explored, grouped, and summarized. 
+This  R script "enrolled public act 10100029.R" takes the PDF of the enrolled public act and converts it into a data table that can be explored, grouped, and summarized. 
 
 After running the code, for the purposes of data scrubbing please note the following errors and anomalies that need to be fixed (either
 in R or export as a CSV and do the following in Excel): 
