@@ -67,7 +67,7 @@ hb62$appropriation <- str_extract_all(hb62$text, "[$][0-9,]+") #pulls out dollar
 hb62$appropriation <- substr(hb62$appropriation, 1, nchar(hb62$appropriation)-1) #removes extra commas and dollar signs
 
 #add articles
-hb62$section_num<- str_replace_all(hb62$section_num, "  +", " ") #move this after dept names are pulled
+hb62$section_num<- str_replace_all(hb62$section_num, "  +", " ") #gets rid of extra spaces
 hb62$article<-str_extract(hb62$section_num,index3) #pulls article from text column
 hb62<-separate(hb62,article, c("article","dept"), sep = " ") %>%  #pulls out article number
   fill(article) %>% 
@@ -93,6 +93,21 @@ hb62<-separate(hb62,article, c("article","dept"), sep = " ") %>%  #pulls out art
 #write csv
 #write.csv(hb62, "trial.csv")
 
+#OPTIONAL: CREATE "GRANTEE" AND "PURPOSE" COLUMNS
+#the code below creates the grantee and purpose columns available in the downloadable CSV file available on the policy
+#update at https://bit.ly/31H6WpC .  These columns use the formulaic style of the bill, but are admittedly quite messy and require a fair
+#amount of clean up. Or more code, that you should write and share with us! The downloadable version has been scrubbed. 
 
+bill_text<-bill_text %>% 
+  separate(text, c("junk", "grantee", "purpose"), sep = " for ", remove = FALSE) %>% #tries to pull out project and grantee
+  select(article:appropriation,grantee,purpose,text)
+bill_text$grantee<-str_remove_all(bill_text$grantee, "a grant to the ")
+bill_text$grantee<-str_remove_all(bill_text$grantee, "the purpose of making grants and loans to ") 
+bill_text$grantee<-str_remove_all(bill_text$grantee, "Village of ")
+bill_text$grantee<-str_remove_all(bill_text$grantee, "City of ")
+bill_text$grantee<-str_remove_all(bill_text$grantee, "a grant to ")
+bill_text$grantee<-str_remove_all(bill_text$grantee, "grants to ")
+bill_text$grantee<-str_remove_all(bill_text$grantee, "costs associated with ")
+bill_text$purpose<-str_remove_all(bill_text$purpose, "costs associated with ")
 
 
